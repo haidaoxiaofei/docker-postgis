@@ -63,6 +63,8 @@ else
 	su - postgres -c "psql -c \"$CMD\""
 	echo "Loading postgis extension"
 	su - postgres -c "psql template_postgis -c 'CREATE EXTENSION postgis;'"
+	echo "Loading pgRouting extension"
+	su - postgres -c "psql template_postgis -c 'CREATE EXTENSION pgRouting;'"
 
 	if [[ ${HSTORE} == "true" ]]
 	then
