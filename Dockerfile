@@ -49,6 +49,7 @@ WORKDIR "/osm2pgrouting"
 RUN cmake -H. -Bbuild 
 WORKDIR "/osm2pgrouting/build"
 RUN make  && make install
+WORKDIR "/"
 
 
 # Optimise postgresql
