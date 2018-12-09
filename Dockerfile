@@ -17,6 +17,12 @@ RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-k
 # The following packages have unmet dependencies:
 RUN apt-get update; apt-get install -y postgresql-client-10 postgresql-common postgresql-10 postgresql-10-postgis-2.4 postgresql-10-pgrouting netcat
 
+#-------------Install prerequisites for osm2pgrouting--------------------
+RUN apt-get update; apt-get install -y git cmake expat libexpat1-dev libboost-dev libboost-program-options-dev libpqxx-dev
+RUN apt-get install -y build-essential g++
+
+
+
 # Open port 5432 so linked containers can see them
 EXPOSE 5432
 
@@ -37,6 +43,13 @@ ADD setup-ssl.sh /
 ADD setup-user.sh /
 ADD postgresql.conf /tmp/postgresql.conf
 RUN chmod +x /docker-entrypoint.sh
+
+RUN git clone https://github.com/haidaoxiaofei/osm2pgrouting.git
+WORKDIR "/osm2pgrouting"
+RUN cmake -H. -Bbuild 
+WORKDIR "/osm2pgrouting/build"
+RUN make  && make install
+
 
 # Optimise postgresql
 RUN echo "kernel.shmmax=543252480" >> /etc/sysctl.conf

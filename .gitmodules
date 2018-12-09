@@ -1,0 +1,3 @@
+[submodule "osm2pgrouting"]
+	path = osm2pgrouting
+	url = https://github.com/haidaoxiaofei/osm2pgrouting.git
